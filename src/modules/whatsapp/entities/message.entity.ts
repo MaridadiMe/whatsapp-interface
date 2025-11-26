@@ -1,19 +1,18 @@
-import { BaseEntity } from "src/common/entities/base.entity";
-import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
-import { Business } from "./business.entity";
+import { BaseEntity } from 'src/common/entities/base.entity';
+import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
+import { Business } from './business.entity';
 
 @Entity({ name: 'messages' })
 export class Message extends BaseEntity {
-
-  @Index('WIS_WA_MESSAGE_ID', ['whatsappMessageId'], { unique: true})
+  @Index('WIS_WA_MESSAGE_ID', ['whatsappMessageId'], { unique: true })
   @Column()
-  whatsappMessageId: string; // wamid.xxx (string)
- 
-  @Index('WIS_MSG_FROM', ['from'], { unique: true})
-  @Column({ length: 20 })
-  from: string; // phone numbers are max 15 digits, + extras
+  whatsappMessageId: string;
 
-  @Index('WIS_MSG_TO', ['to'], { unique: true})
+  @Index('WIS_MSG_FROM', ['from'], { unique: true })
+  @Column({ length: 20 })
+  from: string;
+
+  @Index('WIS_MSG_TO', ['to'], { unique: true })
   @Column({ length: 20 })
   to: string;
 
@@ -52,20 +51,19 @@ export class Message extends BaseEntity {
   @Column({ type: 'datetime', nullable: true })
   failedAt: Date | null;
 
-  @ManyToOne(() => Business, business => business.messages, {
-        onDelete: 'CASCADE',   
-    })
-    @JoinColumn({ name: 'businessId' })
-    business: Business;
+  @ManyToOne(() => Business, (business) => business.messages, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'businessId' })
+  business: Business;
 
-   
-     @Index('WIS_MSG_BUSINESS_ID', ['businessId'], { unique: true})
-    @Column()
-    businessId: string;
+  @Index('WIS_MSG_BUSINESS_ID', ['businessId'], { unique: true })
+  @Column()
+  businessId: string;
 
-  @Index('WIS_CONV_ID', ['conversationId'], { unique: true})
+  @Index('WIS_CONV_ID', ['conversationId'], { unique: true })
   @Column({ type: 'varchar', length: 36 })
-  conversationId: string; // optional but HIGHLY useful
+  conversationId: string;
 
   @Column({ type: 'json', nullable: true })
   rawPayload: any;

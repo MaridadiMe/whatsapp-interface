@@ -1,25 +1,27 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { RestaurantHandler } from "../handlers/restaurant.handler";
-import { MarketFreshHandler } from "../handlers/market-fresh.handler";
-import { RideShareHandler } from "../handlers/ride-share.handler";
+import { Injectable, Logger } from '@nestjs/common';
+import { RestaurantHandler } from '../handlers/restaurant.handler';
+import { MarketFreshHandler } from '../handlers/market-fresh.handler';
+import { RideShareHandler } from '../handlers/ride-share.handler';
+import { ChangeValue } from '../types/whatsapp';
+import { Business } from '../entities/business.entity';
 
 @Injectable()
 export class RouterService {
-    private readonly logger = new Logger(RouterService.name);
-    constructor(
+  private readonly logger = new Logger(RouterService.name);
+  constructor(
     private restaurant: RestaurantHandler,
     private marketFresh: MarketFreshHandler,
     private rideShare: RideShareHandler,
   ) {}
 
-  async routeToHandler(business: string, message: any) {
-    switch (business) {
+  async routeToHandler(business: Business, change: ChangeValue) {
+    switch (business.name) {
       case 'restaurant':
-        return this.restaurant.handle(message, business);
+        return this.restaurant.handle(change, business);
       case 'marketFresh':
-        return this.marketFresh.handle(message, business);
+        return this.marketFresh.handle(change, business);
       case 'rideShare':
-        return this.rideShare.handle(message, business);
+        return this.rideShare.handle(change, business);
       default:
         this.logger.debug('Unknown business type');
     }

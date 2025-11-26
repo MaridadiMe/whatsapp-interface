@@ -1,15 +1,14 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable, Logger } from '@nestjs/common';
+import { BusinessRepository } from '../repositories/business.repository';
+import { Business } from '../entities/business.entity';
 
 @Injectable()
-export class BusinessService{
+export class BusinessService {
   private readonly logger = new Logger(BusinessService.name);
-    async findByPhoneNumberId(phoneNumberId: string){
-      this.logger.debug(`Finding Business By Phone Number Id, ${phoneNumberId}`);
-        const businesses = ['restaurant', 'marketFresh', 'rideShare'];
+  constructor(private readonly repository: BusinessRepository) {}
 
-        const randomBusiness =
-    businesses[Math.floor(Math.random() * businesses.length)];
-
-  return randomBusiness;
-    }
+  async findByPhoneNumberId(phoneNumberId: string): Promise<Business | null> {
+    this.logger.debug(`Finding Business By Phone Number Id, ${phoneNumberId}`);
+    return this.repository.findOneBy({ phoneNumberId });
+  }
 }
