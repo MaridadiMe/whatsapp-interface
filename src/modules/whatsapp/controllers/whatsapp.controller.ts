@@ -32,6 +32,8 @@ export class WhatsappController {
     }
 
     @Post()
+    @PublicRoute()
+    @HttpCode(HttpStatusCode.Ok)
     async handleWebhook(
         @Body() body: any
     ){

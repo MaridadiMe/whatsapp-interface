@@ -12,8 +12,8 @@ export class RouterService {
     private rideShare: RideShareHandler,
   ) {}
 
-  async routeToHandler(business: any, message: any) {
-    switch (business.type) {
+  async routeToHandler(business: string, message: any) {
+    switch (business) {
       case 'restaurant':
         return this.restaurant.handle(message, business);
       case 'marketFresh':

@@ -6,6 +6,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './modules/auth/guards/jwt-auth-guard';
 import { PermissionsGuard } from './modules/auth/guards/permissions.guard';
+import { WhatsappModule } from './modules/whatsapp/whatsapp.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { PermissionsGuard } from './modules/auth/guards/permissions.guard';
         databaseConnectionOptions(configSevice),
     }),
     AuthModule,
+    WhatsappModule
   ],
   providers: [
     {

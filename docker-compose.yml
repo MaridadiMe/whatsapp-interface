@@ -1,0 +1,18 @@
+services:
+  rosemlabs-wis:
+    image: cross7heroad/rosemlabs:wis-1.0.0
+    container_name: rosemlabs-wis
+    restart: unless-stopped
+    env_file: .env
+    networks:       
+      - rosemlabs_proxy      
+
+    labels:
+      - "traefik.enable=true"
+
+      # HTTPS router
+      - "traefik.http.routers.rosemlabs-iams.entrypoints=websecure"
+      - "traefik.http.routers.rosemlabs-iams.rule=Host(`api.rosemlabs.com`) && PathPrefix(`/api/v1/wis`)"
+      - "traefik.http.routers.rosemlabs-iams.tls=true"
+      - "traefik.http.routers.rosemlabs-iams.tls.certresolver=le" 
+

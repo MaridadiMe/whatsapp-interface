@@ -1,11 +1,15 @@
 import { Injectable, RequestMethod } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { RestclientService } from "src/modules/restclient/restclient.service";
 
 @Injectable()
 export class MarketFreshHandler {
     constructor(
-        private readonly restClient: RestclientService
+        private readonly restClient: RestclientService,
+        private readonly configService: ConfigService
     ){}
+
+    private readonly APP_TOKEN = this.configService.get('APP_TOKEN');
 
     async handle(message: any, business: any) {
     const userText = message.messages?.[0]?.text?.body;
@@ -19,14 +23,14 @@ export class MarketFreshHandler {
     }
 
     await this.restClient.request({
-        url: `https://graph.facebook.com/v20.0/${business.phoneNumberId}/messages`,
+        url: `https://graph.facebook.com/v20.0/898464770011278/messages`,
         method: RequestMethod.POST,
         payload: {
             messaging_product: "whatsapp",
             to: from,
             text: { body: reply },
         },
-        headers: { Authorization: `Bearer ${business.whatsappToken}` }
+        headers: { Authorization: `Bearer ${this.APP_TOKEN}` }
     });
   }
 }
