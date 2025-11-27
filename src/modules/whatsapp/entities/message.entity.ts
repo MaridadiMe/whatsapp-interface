@@ -1,6 +1,11 @@
 import { BaseEntity } from 'src/common/entities/base.entity';
 import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
 import { Business } from './business.entity';
+import {
+  MessageDirection,
+  MessageStatus,
+  MessageType,
+} from '../enums/whatsapp.enums';
 
 @Entity({ name: 'messages' })
 export class Message extends BaseEntity {
@@ -18,13 +23,13 @@ export class Message extends BaseEntity {
 
   @Column({
     type: 'enum',
-    enum: ['inbound', 'outbound'],
+    enum: MessageDirection,
   })
-  direction: 'inbound' | 'outbound';
+  direction: MessageDirection;
 
   @Column({
     type: 'enum',
-    enum: ['text', 'template', 'media', 'interactive', 'unknown'],
+    enum: MessageType,
     default: 'text',
   })
   type: string;
@@ -34,7 +39,7 @@ export class Message extends BaseEntity {
 
   @Column({
     type: 'enum',
-    enum: ['sent', 'delivered', 'read', 'failed'],
+    enum: MessageStatus,
     default: 'sent',
   })
   status: string;
@@ -61,9 +66,9 @@ export class Message extends BaseEntity {
   @Column()
   businessId: string;
 
-  @Index('WIS_CONV_ID', ['conversationId'], { unique: true })
-  @Column({ type: 'varchar', length: 36 })
-  conversationId: string;
+  // @Index('WIS_CONV_ID', ['conversationId'], { unique: true })
+  // @Column({ type: 'varchar', length: 36 })
+  // conversationId: string;
 
   @Column({ type: 'json', nullable: true })
   rawPayload: any;

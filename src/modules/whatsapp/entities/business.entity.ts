@@ -15,6 +15,10 @@ export class Business extends BaseEntity {
   @Column()
   phoneNumberId: string;
 
+  @Index('WIS_BUSINESS_DISPLAY_PHONE', ['displayPhoneNumber'], { unique: true })
+  @Column()
+  displayPhoneNumber: string;
+
   @Column({ type: 'varchar', length: 100, nullable: true })
   wabaId?: string;
 
