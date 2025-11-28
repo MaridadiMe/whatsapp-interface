@@ -13,11 +13,11 @@ export class Message extends BaseEntity {
   @Column()
   whatsappMessageId: string;
 
-  @Index('WIS_MSG_FROM', ['from'], { unique: true })
+  @Index('WIS_MSG_FROM', ['from'])
   @Column({ length: 20 })
   from: string;
 
-  @Index('WIS_MSG_TO', ['to'], { unique: true })
+  @Index('WIS_MSG_TO', ['to'])
   @Column({ length: 20 })
   to: string;
 
@@ -62,13 +62,9 @@ export class Message extends BaseEntity {
   @JoinColumn({ name: 'businessId' })
   business: Business;
 
-  @Index('WIS_MSG_BUSINESS_ID', ['businessId'], { unique: true })
+  @Index('WIS_MSG_BUSINESS_ID', ['businessId'])
   @Column()
   businessId: string;
-
-  // @Index('WIS_CONV_ID', ['conversationId'], { unique: true })
-  // @Column({ type: 'varchar', length: 36 })
-  // conversationId: string;
 
   @Column({ type: 'json', nullable: true })
   rawPayload: any;
