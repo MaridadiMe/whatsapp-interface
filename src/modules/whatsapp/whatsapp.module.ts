@@ -10,6 +10,7 @@ import { RestClientModule } from '../restclient/restclient.module';
 import { BusinessRepository } from './repositories/business.repository';
 import { MessageRepository } from './repositories/message.repository';
 import { MessageService } from './services/message.service';
+import { WhatsAppReplyService } from './services/whatsapp-reply.service';
 
 @Module({
   imports: [RestClientModule],
@@ -17,6 +18,7 @@ import { MessageService } from './services/message.service';
   controllers: [WhatsappController],
   providers: [
     WhatsappService,
+    WhatsAppReplyService,
     BusinessService,
     RouterService,
     MarketFreshHandler,

@@ -13,6 +13,7 @@ import { HttpStatusCode } from 'axios';
 import { PublicRoute } from 'src/modules/auth/decorators/public-route.decorator';
 import { WhatsappService } from '../services/whatsapp.service';
 import { WhatsappIncomingPayload } from '../types/whatsapp';
+import { Permissions } from 'src/modules/auth/decorators/permissions.decorator';
 
 @Controller('whatsapp')
 export class WhatsappController {
@@ -48,5 +49,12 @@ export class WhatsappController {
   async handleWebhook(@Body() body: WhatsappIncomingPayload) {
     this.logger.debug(`Received Message From Meta: \n ${JSON.stringify(body)}`);
     return this.whatsappService.handleIncomingMessage(body);
+  }
+
+  @Get('messages')
+  @Permissions('READ_MESSAGES')
+  @HttpCode(HttpStatusCode.Ok)
+  async getMessages() {
+    return this.whatsappService.findMessages();
   }
 }

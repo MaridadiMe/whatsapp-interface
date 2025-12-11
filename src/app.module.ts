@@ -7,12 +7,14 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './modules/auth/guards/jwt-auth-guard';
 import { PermissionsGuard } from './modules/auth/guards/permissions.guard';
 import { WhatsappModule } from './modules/whatsapp/whatsapp.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    EventEmitterModule.forRoot(),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -20,7 +22,7 @@ import { WhatsappModule } from './modules/whatsapp/whatsapp.module';
         databaseConnectionOptions(configSevice),
     }),
     AuthModule,
-    WhatsappModule
+    WhatsappModule,
   ],
   providers: [
     {

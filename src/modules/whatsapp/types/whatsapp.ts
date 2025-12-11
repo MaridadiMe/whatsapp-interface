@@ -17,7 +17,7 @@ export type ChangeValue = {
   messaging_product: string;
   metadata?: Metadata;
   contacts?: Contact[];
-  messages?: Message[];
+  messages?: WhatsappMessage[];
   statuses?: Status[];
 };
 
@@ -35,7 +35,7 @@ export type Profile = {
   name: string;
 };
 
-export type Message = {
+export type WhatsappMessage = {
   from: string;
   id: string;
   timestamp: string;

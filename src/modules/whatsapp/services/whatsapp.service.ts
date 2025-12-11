@@ -9,6 +9,7 @@ import { ChangeValue, WhatsappIncomingPayload } from '../types/whatsapp';
 import { Business } from '../entities/business.entity';
 import { ChangeType, MessageStatus } from '../enums/whatsapp.enums';
 import { MessageService } from './message.service';
+import { MessageRepository } from '../repositories/message.repository';
 
 @Injectable()
 export class WhatsappService {
@@ -18,6 +19,7 @@ export class WhatsappService {
     private readonly businessService: BusinessService,
     private readonly routerService: RouterService,
     private readonly messageService: MessageService,
+    private readonly messageRepository: MessageRepository,
   ) {}
 
   async handleIncomingMessage(body: WhatsappIncomingPayload) {
@@ -68,7 +70,7 @@ export class WhatsappService {
       this.logger.debug(`No Message Content`);
       return;
     }
-    return await this.messageService.saveNewMessage(
+    return await this.messageService.saveNewIncomingMessage(
       messageObj,
       business,
       rawPayload,
@@ -80,5 +82,9 @@ export class WhatsappService {
       return ChangeType.STATUS_UPDATE;
     }
     return ChangeType.MESSAGE;
+  }
+
+  async findMessages() {
+    return this.messageRepository.find();
   }
 }
